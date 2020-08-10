@@ -1,4 +1,4 @@
-package timer
+package pkg
 
 import (
 	"os/exec"

@@ -3,7 +3,7 @@ package timer
 import (
 	"time"
 
-	pkgtimer "github.com/congcongke/timer/pkg/timer"
+	pkgtimer "github.com/congcongke/timer/pkg"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +22,7 @@ func NewTimerCommand() *cobra.Command {
 	cmd.PersistentFlags().StringVar(&conf.Command, "command", "", "the command need to run")
 	cmd.PersistentFlags().DurationVar(&conf.Interval, "interval", time.Second, "inteval to run the command")
 	cmd.PersistentFlags().StringSliceVar(&conf.Args, "args", []string{}, "the args of command")
-	cmd.PersistentFlags().Int32Var(&conf.TotalTimes, "times", 10, "how many times the command will run")
+	cmd.PersistentFlags().IntVar(&conf.TotalTimes, "times", 10, "how many times the command will run")
 
 	return cmd
 }
