@@ -15,14 +15,19 @@ func NewTimerCommand() *cobra.Command {
 		Short: "slottimer is a simple executable period",
 		Long:  "it is expected to execute the command periodly",
 		Run: func(cmd *cobra.Command, args []string) {
-			conf.Exec()
+			udpTimer, err := pkgtimer.NewUdpTimer(&conf)
+			if err != nil {
+				panic("create udptimer failed")
+			}
+			udpTimer.Exec()
 		},
 	}
 
-	cmd.PersistentFlags().StringVar(&conf.Command, "command", "", "the command need to run")
 	cmd.PersistentFlags().DurationVar(&conf.Interval, "interval", time.Second, "inteval to run the command")
-	cmd.PersistentFlags().StringSliceVar(&conf.Args, "args", []string{}, "the args of command")
 	cmd.PersistentFlags().IntVar(&conf.TotalTimes, "times", 10, "how many times the command will run")
+	cmd.PersistentFlags().StringVar(&conf.Filename, "file", "", "file of data")
+	cmd.PersistentFlags().IntVar(&conf.Block, "block", 50000, "how many block times to run")
+	cmd.PersistentFlags().StringVar(&conf.Destination, "dest", "", "destination in xxx:xx")
 
 	return cmd
 }
