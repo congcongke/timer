@@ -16,6 +16,7 @@ type TimerConf struct {
 	Destination string
 	Filename    string
 	Block       int
+	TextType    string
 }
 
 type UdpTimer struct {
@@ -32,9 +33,14 @@ func NewUdpTimer(conf *TimerConf) (*UdpTimer, error) {
 
 	fmt.Println(string(str))
 
-	data, err := hex.DecodeString(strings.TrimSuffix(string(str), "\n"))
-	if err != nil {
-		panic(fmt.Sprintf("file is not in hex, %v", err))
+	data := []byte{}
+	if conf.TextType == "binary" {
+		data, err = hex.DecodeString(strings.TrimSuffix(string(str), "\n"))
+		if err != nil {
+			panic(fmt.Sprintf("file is not in hex, %v", err))
+		}
+	} else {
+		data = []byte(strings.TrimSuffix(string(str), "\n"))
 	}
 
 	dst, err := net.ResolveUDPAddr("udp", conf.Destination)

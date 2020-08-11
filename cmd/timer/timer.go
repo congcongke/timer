@@ -10,7 +10,7 @@ import (
 func NewTimerCommand() *cobra.Command {
 	conf := pkgtimer.TimerConf{}
 
-	cmd := &cobra.Command {
+	cmd := &cobra.Command{
 		Use:   "slottimer",
 		Short: "slottimer is a simple executable period",
 		Long:  "it is expected to execute the command periodly",
@@ -28,6 +28,7 @@ func NewTimerCommand() *cobra.Command {
 	cmd.PersistentFlags().StringVar(&conf.Filename, "file", "", "file of data")
 	cmd.PersistentFlags().IntVar(&conf.Block, "block", 50000, "how many block times to run")
 	cmd.PersistentFlags().StringVar(&conf.Destination, "dest", "", "destination in xxx:xx")
+	cmd.PersistentFlags().StringVar(&conf.TextType, "text", "binary", "default is binary, also support raw")
 
 	return cmd
 }
